@@ -7,3 +7,11 @@ module "vpc-subnets" {
   private-cidr-subs = var.private-cidr-subs
   public-traffic    = var.public-traffic
 }
+
+
+module "Cluster" {
+
+    source = "./Cluster"
+    private-Subnets = module.vpc-subnets.private-subnet-ids
+  
+}

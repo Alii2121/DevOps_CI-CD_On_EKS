@@ -1,0 +1,3 @@
+variable "private-Subnets" {
+  
+}
