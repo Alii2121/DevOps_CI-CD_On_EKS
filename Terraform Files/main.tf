@@ -21,5 +21,4 @@ module "Cluster" {
 
     source = "./Cluster"
     private-Subnets = module.vpc-subnets.private-subnet-ids
-  
 }

@@ -15,6 +15,55 @@ data "aws_ami" "ubuntu" {
 }
 
 
+#---------------------------------------------------------------------------
+# EC2 Role to access EKS Cluster
+#----------------------------------------------------------------------------
+
+resource "aws_iam_role" "eks-ec2-role" {
+  name = "eks-ec2-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "eks-policy-attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  role       = aws_iam_role.eks-ec2-role.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks-node-policy-attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.eks-ec2-role.name
+}
+
+resource "aws_iam_role_policy_attachment" "eks-cni-policy-attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks-ec2-role.name
+}
+
+
+
+resource "aws_iam_instance_profile" "ec2_kubectl_profile" {
+  name = "ec2-eks-profile"
+  role = aws_iam_role.eks-ec2-role.name
+}
+#-------------------------------------------------------------------------------
+
+
+
+
+
+
 
 resource "aws_security_group" "public-sec-group" {
     
@@ -55,12 +104,16 @@ resource "aws_security_group" "public-sec-group" {
      
      ami = data.aws_ami.ubuntu.id 
      
-     instance_type = "t2.mirco"
+     instance_type = "t2.micro"
      
      security_groups = [aws_security_group.public-sec-group.id]
      
      subnet_id = var.public-Subnets[0]
      
+     key_name = "ansible"
+     
+     iam_instance_profile = aws_iam_instance_profile.ec2_kubectl_profile.name
+
      tags = {
        name = "Bation-Host"
      }

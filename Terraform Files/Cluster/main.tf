@@ -39,7 +39,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EK
 resource "aws_eks_cluster" "eks_cluster" {
   name     = "ali-eks-cluster"
   role_arn = aws_iam_role.eks-iam-role.arn
-
+  version = "1.23"
   vpc_config {
     subnet_ids = [
         var.private-Subnets[0],
@@ -113,7 +113,7 @@ resource "aws_iam_role" "workernodes" {
   instance_types = ["t2.micro"]
  
   scaling_config {
-   desired_size = 1
+   desired_size = 2
    max_size   = 2
    min_size   = 1
   }

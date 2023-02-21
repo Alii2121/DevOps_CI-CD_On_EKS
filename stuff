@@ -1,0 +1,14 @@
+install unzip on ec2
+install kubectl 
+1- sudo snap install kubectl --classic
+
+install awscliv2
+1- curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+2-  unzip awscliv2.zip
+3- sudo ./aws/install
+4- pass credentials file to ec2
+
+aws eks update-kubeconfig 
+export KUBECONFIG=$HOME/.kube/config
+
+create a role for ec2 to connect to cluster
