@@ -9,6 +9,14 @@ module "vpc-subnets" {
 }
 
 
+module "Bastion-Host" {
+
+    source = "./Bastion_host"
+    public-Subnets = module.vpc-subnets.public-subnet-ids
+    vpc-id = module.vpc-subnets.vpc-id
+  
+}
+
 module "Cluster" {
 
     source = "./Cluster"
