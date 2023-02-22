@@ -1,0 +1,88 @@
+- name: Install dependencies & Packages
+  hosts: all
+  become: yes
+  tasks:
+      - name: Install kubectl using snap
+        shell: snap install kubectl --classic
+        args:
+         creates: /snap/bin/kubectl
+ 
+      - name: Install unzip
+        apt:  name={{ item }} state=present update_cache=yes
+        with_items:
+          - unzip
+          - python
+          - acl 
+          - pip 
+
+      - name: install 
+        pip:
+         name:
+           - pyyaml
+           - kubernetes
+           - ansible
+
+
+
+      - name: Download aws zip
+        get_url:
+          url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+          dest: ./awscliv2
+
+
+      - name: Unzip the downloaded file
+        unarchive:
+          src: ./awscliv2
+          dest: .
+          remote_src: yes
+
+      - name: install aws
+        shell: sudo ./aws/install --update
+
+      - name: Create AWS credentials dir 
+        file:
+         path: ".aws"
+         state: directory
+       
+      # - name: Install awscli v2
+      #   get_url:
+      #     url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+      #     dest: "~/aws"
+   
+      # - name: Unzip AWS CLI v2 zip file
+      #   unarchive:
+      #    src: "~/aws/awscliv2.zip"
+      #    dest: "~/aws/"
+      #    remote_src: yes
+ 
+      # - name: Install AWS CLI v2
+      #   shell: "~/aws/awscliv2/aws/install"
+      #   args:
+      #     chdir: "~/aws/awscliv2/aws"
+ 
+      - name: Copy AWS credentials to EC2 instance
+        copy:
+         src:   /home/alimarawan/.aws/credentials
+         dest:  /home/ubuntu/.aws/
+         owner: ubuntu
+         group: ubuntu
+         mode: '0600' 
+ 
+      - name: Update kubeconfig
+        shell: aws eks --region us-east-1 update-kubeconfig --name ali-eks-cluster
+        args:
+         executable: /bin/bash
+ 
+      - name: Set KUBECONFIG environment variable
+        shell: export KUBECONFIG=$HOME/.kube/config
+        args:
+         executable: /bin/bash
+    
+      - name: Create namespace
+        k8s:
+          api_version: v1
+          kind: Namespace
+          name: app
+          state: present
+
+ 

@@ -9,6 +9,7 @@ install awscliv2
 4- pass credentials file to ec2
 
 aws eks update-kubeconfig 
-export KUBECONFIG=$HOME/.kube/config
+    export KUBECONFIG=$HOME/.kube/config
 
 create a role for ec2 to connect to cluster
+ansible-galaxy collection install community.kubernetes
