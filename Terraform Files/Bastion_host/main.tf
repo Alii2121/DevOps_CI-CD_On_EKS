@@ -113,7 +113,10 @@ resource "aws_security_group" "public-sec-group" {
      key_name = "ansible"
      
      iam_instance_profile = aws_iam_instance_profile.ec2_kubectl_profile.name
-
+   
+    # lifecycle {
+    # prevent_destroy = true
+    #  }
      tags = {
        name = "Bation-Host"
      }

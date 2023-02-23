@@ -110,7 +110,7 @@ resource "aws_iam_role" "workernodes" {
         var.private-Subnets[1]
   ]
  
-  instance_types = ["t2.micro"]
+  instance_types = ["t2.medium"]
  
   scaling_config {
    desired_size = 2
