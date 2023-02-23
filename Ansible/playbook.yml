@@ -8,6 +8,7 @@
       - ../K8S/RoleBinding.yml
       - ../K8S/jenkins-deployment.yml
       - ../K8S/LoadBalancer.yml
+      
   tasks:
       - name: Install kubectl using snap
         shell: snap install kubectl --classic
