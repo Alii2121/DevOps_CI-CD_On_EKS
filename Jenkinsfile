@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("my-image:${env.BUILD_NUMBER}", "./Python-app/Dockerfile")
+                    docker.build("Py-App:${env.BUILD_NUMBER}", "./Python-app/Dockerfile")
                 }
             }
         }
