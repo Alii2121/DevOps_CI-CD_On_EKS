@@ -73,24 +73,18 @@ ansible-galaxy collection install community.kubernetes
 asnible-playbook -i inventory.txt playbook.yml
 ```
 
-- After Terraform Creation SSH into VM and install ***kubectl*** or any needed software like ***gcloud*** ( You can use Ansible to Automate this step )
+- Get the LoadBalancer DNS output from the playbook then wait few minutes for the LB to be Active and put ***:80*** at the end of the URL 
 
-- Connect to the GKE private cluster 
-``` bash
-gcloud container clusters get-credentials <cluster_name> --zone <zone> --project <project_id>
-```
-- Copy the provided k8s files and run them by:
-```bash
-kubectl apply -f <file-name>
-```
 
-- Run the following command to get the IP Adress of your Application
-``` bash
-kubectl get ingress 
+- Access The Jenkins URL then SSH into the EC2 to get Jenkins Password RUN
+``` bash 
+kubectl get pods -n jenkins 
+kubectl logs <pod-name> -n jenkins
 ```
-- Copy the IP address and insert it in your browser to access the Application 
+- Configure Jenkins And Install Plugins Like Kubernetes and GitHub
+- Enter Your Credentials for GitHub And DockerHub in ***Manage Credentials***
+- Fork This Repo to get App <a href="https://github.com/Alii2121/Py-App-CICD" target="_blank">App</a>
 
-- Now Your Infrastructure & Application Is Up and Running !!
 
 
 ------------------------------------
