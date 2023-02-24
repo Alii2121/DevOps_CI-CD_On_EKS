@@ -41,7 +41,7 @@
 - The Jenkins deployment has a service account with a ***ClusterRole*** That allows the deployment to create deployments
 - The Ansible ***Playbook*** Install ***AWSCLI V2*** To be able to connect to the cluster You must have V2 
 - Ansible Installs Packages and ***Kubectl*** And pass credentials and Make the EC2 Connect to the Cluster then Deploys Jenkins and creates 2 Namespaces
-
+- The StorageClass k8s file updates the StorageClass to ***gp2*** 
 
 
 ---------------
@@ -67,6 +67,10 @@ terraform apply
 -  Then Install Ansible Kubernetes Module 
 ```bash
 ansible-galaxy collection install community.kubernetes
+```
+- Then Run the Ansible Playbook
+``` bash
+asnible-playbook -i inventory.txt playbook.yml
 ```
 
 - After Terraform Creation SSH into VM and install ***kubectl*** or any needed software like ***gcloud*** ( You can use Ansible to Automate this step )
