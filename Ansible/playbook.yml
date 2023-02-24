@@ -104,5 +104,11 @@
       - name: Apply YAML files using kubectl
         shell: kubectl apply -f ./K8S/{{ item }} -n jenkins
         with_items: "{{ yaml_files }}"
+        
+      - name: Get Kubernetes Services
+        command: kubectl get services
+        register: services_output
 
+      - debug:
+          var: services_output.stdout_lines
      
