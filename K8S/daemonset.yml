@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: docker-installer
+  labels:
+    app: docker-installer
+spec:
+  selector:
+    matchLabels:
+      app: docker-installer
+  template:
+    metadata:
+      labels:
+        app: docker-installer
+    spec:
+      hostPID: true
+      containers:
+      - name: docker-installer
+        image: docker:20.10.7
+        command:
+        - "/bin/bash"
+        - "-c"
+        - |
+          set -euo pipefail
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sh get-docker.sh
+          usermod -aG docker $(whoami)
+        securityContext:
+          privileged: true

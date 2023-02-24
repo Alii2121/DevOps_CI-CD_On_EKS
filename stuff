@@ -13,4 +13,4 @@ aws eks update-kubeconfig
 
 create a role for ec2 to connect to cluster
 ansible-galaxy collection install community.kubernetes
-ebs ci add-on 
+ebs ci add-on -- add policy of ebs ci

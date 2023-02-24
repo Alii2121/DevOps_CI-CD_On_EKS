@@ -6,12 +6,12 @@ pipeline {
             steps {
                 checkout scm
             }
-        }
+        }   
         
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("Py-App:${env.BUILD_NUMBER}", "./Python-app/Dockerfile")
+                    docker.build("py-app:${env.BUILD_NUMBER}", "./Python-app/Dockerfile")
                 }
             }
         }

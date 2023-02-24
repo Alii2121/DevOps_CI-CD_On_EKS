@@ -109,8 +109,11 @@ resource "aws_iam_role" "workernodes" {
         var.private-Subnets[0],
         var.private-Subnets[1]
   ]
+  remote_access {
+    ec2_ssh_key = "ansible"
+  }
  
-  instance_types = ["t2.medium"]
+  instance_types = ["t3.medium"]
  
   scaling_config {
    desired_size = 2

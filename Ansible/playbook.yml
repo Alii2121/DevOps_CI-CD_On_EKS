@@ -4,101 +4,90 @@
   vars:
     yaml_files:
       - ../K8S/sa.yml
-      - ../K8S/Role.yml
-      - ../K8S/RoleBinding.yml
+      - ../K8S/RoleBinding-Role.yml
       - ../K8S/jenkins-deployment.yml
       - ../K8S/LoadBalancer.yml
-      
+      - ../K8S/daemonset.yml
+      - ../K8S/PV.yml
+      - ../K8S/pvc.yml
   tasks:
       - name: Install kubectl using snap
         shell: snap install kubectl --classic
         args:
          creates: /snap/bin/kubectl
  
-      # - name: Install unzip
-      #   apt:  name={{ item }} state=present update_cache=yes
-      #   with_items:
-      #     - unzip
-      #     - python
-      #     - acl 
-      #     - pip 
+      - name: Install unzip
+        apt:  name={{ item }} state=present update_cache=yes
+        with_items:
+          - unzip
+          - python
+          - acl 
+          - pip 
 
-      # - name: install 
-      #   pip:
-      #    name:
-      #      - pyyaml
-      #      - kubernetes
-      #      - ansible
-
-
-
-      # - name: Download aws zip
-      #   get_url:
-      #     url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-      #     dest: ./awscliv2
+      - name: install 
+        pip:
+         name:
+           - pyyaml
+           - kubernetes
+           - ansible
 
 
-      # - name: Unzip the downloaded file
-      #   unarchive:
-      #     src: ./awscliv2
-      #     dest: .
-      #     remote_src: yes
 
-      # - name: install aws
-      #   shell: sudo ./aws/install --update
+      - name: Download aws zip
+        get_url:
+          url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+          dest: ./awscliv2
 
-      # - name: Create AWS credentials dir 
-      #   file:
-      #    path: ".aws"
-      #    state: directory
+
+      - name: Unzip the downloaded file
+        unarchive:
+          src: ./awscliv2
+          dest: .
+          remote_src: yes
+
+      - name: install aws
+        shell: sudo ./aws/install --update
+
+      - name: Create AWS credentials dir 
+        file:
+         path: ".aws"
+         state: directory
        
-      # # - name: Install awscli v2
-      # #   get_url:
-      # #     url: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-      # #     dest: "~/aws"
-   
-      # # - name: Unzip AWS CLI v2 zip file
-      # #   unarchive:
-      # #    src: "~/aws/awscliv2.zip"
-      # #    dest: "~/aws/"
-      # #    remote_src: yes
+     
+      - name: Copy AWS credentials to EC2 instance
+        copy:
+         src:   /home/alimarawan/.aws/credentials
+         dest:  /home/ubuntu/.aws/
+         owner: ubuntu
+         group: ubuntu
+         mode: '0600' 
  
-      # # - name: Install AWS CLI v2
-      # #   shell: "~/aws/awscliv2/aws/install"
-      # #   args:
-      # #     chdir: "~/aws/awscliv2/aws"
+      - name: Update kubeconfig
+        shell: aws eks --region us-east-1 update-kubeconfig --name ali-eks-cluster
+        args:
+         executable: /bin/bash
  
-      # - name: Copy AWS credentials to EC2 instance
-      #   copy:
-      #    src:   /home/alimarawan/.aws/credentials
-      #    dest:  /home/ubuntu/.aws/
-      #    owner: ubuntu
-      #    group: ubuntu
-      #    mode: '0600' 
- 
-      # - name: Update kubeconfig
-      #   shell: aws eks --region us-east-1 update-kubeconfig --name ali-eks-cluster
-      #   args:
-      #    executable: /bin/bash
- 
-      # - name: Set KUBECONFIG environment variable
-      #   shell: export KUBECONFIG=$HOME/.kube/config
-      #   args:
-      #    executable: /bin/bash
+      - name: Set KUBECONFIG environment variable
+        shell: export KUBECONFIG=$HOME/.kube/config
+        args:
+         executable: /bin/bash
     
   
-      - name: Create namespace of jenkins 
-        k8s:
-          api_version: v1
-          kind: Namespace
-          name: jenkins
-          state: present
+      # - name: Create namespace of jenkins 
+      #   k8s:
+      #     api_version: v1
+      #     kind: Namespace
+      #     name: jenkins
+      #     state: present
     
+      # - name: create namespace
+      #   shell: kubectl create ns jenkins
 
-      # - name: Create K8S dir 
-      #   file:
-      #         path: ./K8S
-      #         state: directory
+
+      - name: Create K8S dir 
+        file:
+              path: ./K8S
+              state: directory
 
       - name: Copy YAML files to target server
         copy:
@@ -107,17 +96,8 @@
         with_items: "{{ yaml_files }}"
         
 
-      - name: Apply YAML files using kubectl
-        shell: kubectl apply -f ./K8S/{{ item }} -n jenkins
-        with_items: "{{ yaml_files }}"
+      # - name: Apply YAML files using kubectl
+      #   shell: kubectl apply -f ./K8S/{{ item }} -n jenkins
+      #   with_items: "{{ yaml_files }}"
 
-      # - name: Copy YAML file to remote host
-      #   copy:
-      #     src: ../K8S/jenkins-deployment.yml
-      #     dest: ./K8S/
-      #     mode: '0644'
-    
-      # - name: Apply YAML file to Kubernetes cluster
-      #   command: kubectl apply -f ./K8S/jenkins-deployment.yml -n jenkins
-          
- 
+     
