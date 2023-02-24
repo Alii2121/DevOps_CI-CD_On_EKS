@@ -41,6 +41,7 @@ pipeline {
             steps {
                 script {
                     sh """
+                        kubectl apply -f /var/jenkins_home/workspace/Python-App-CI-CD/K8S/StorageClass --force
                           kubectl apply -f /var/jenkins_home/workspace/Python-App-CI-CD/K8S/ConfigMap.yml -n app
                           kubectl apply -f /var/jenkins_home/workspace/Python-App-CI-CD/K8S/Redis-Deployment -n app
                          kubectl apply -f /var/jenkins_home/workspace/Python-App-CI-CD/K8S/Redis-svc.yml -n app
