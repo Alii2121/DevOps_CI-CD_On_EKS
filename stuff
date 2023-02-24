@@ -14,3 +14,10 @@ aws eks update-kubeconfig
 create a role for ec2 to connect to cluster
 ansible-galaxy collection install community.kubernetes
 ebs ci add-on -- add policy of ebs ci
+daemonset to install docker daemon and connect to it 
+Storageclass to mount volumes and pv --force 
+create app ns
+app url : http://aab8de1d6ec6f4dd297d978c29254005-4740038a5432ea0a.elb.us-east-1.amazonaws.com:8000/
+jenkins url : http://a24267409a8a64e5ab733fbd3cf40204-0be43c112fe29ca0.elb.us-east-1.amazonaws.com:80/
+
+

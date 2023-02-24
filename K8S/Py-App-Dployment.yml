@@ -17,9 +17,9 @@ spec:
         envFrom:
         - configMapRef:
             name: my-configmap
-        image: gcr.io/ali-marwan-project/py-app
+        image: alimarawan2121/py-app
         ports:
-        - containerPort: 8000
+        - containerPort: 8000 
         env:
         - name: REDIS_HOST
           value: svc-redis

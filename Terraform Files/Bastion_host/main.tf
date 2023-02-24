@@ -15,9 +15,9 @@ data "aws_ami" "ubuntu" {
 }
 
 
-#---------------------------------------------------------------------------
-# EC2 Role to access EKS Cluster
-#----------------------------------------------------------------------------
+
+############################### EC2 Role to access EKS Cluster ############################################
+
 
 resource "aws_iam_role" "eks-ec2-role" {
   name = "eks-ec2-role"
@@ -76,6 +76,12 @@ resource "aws_security_group" "public-sec-group" {
         cidr_blocks      = ["0.0.0.0/0"]
     }
 
+   ingress {
+        from_port        = 443
+        to_port          = 443
+        protocol         = "tcp"
+        cidr_blocks      = ["0.0.0.0/0"]
+    }
     ingress {
         from_port        = 22
         to_port          = 22
@@ -114,9 +120,9 @@ resource "aws_security_group" "public-sec-group" {
      
      iam_instance_profile = aws_iam_instance_profile.ec2_kubectl_profile.name
    
-    # lifecycle {
-    # prevent_destroy = true
-    #  }
+    lifecycle {
+    prevent_destroy = true
+     }
      tags = {
        name = "Bation-Host"
      }

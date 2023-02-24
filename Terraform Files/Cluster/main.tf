@@ -23,7 +23,15 @@ EOF
 }
 
 
-####################### Attach Policies to IAM Role ################
+####################### Attach Policies to IAM Role ######################################
+
+
+
+ ############################### This Policy is for EBS Add-on to Create EBS of PV K8s vloumes ##################
+ resource "aws_iam_role_policy_attachment" "AmazonEKS_EBS_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  role    = aws_iam_role.workernodes.name
+ }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
@@ -88,6 +96,13 @@ resource "aws_iam_role" "workernodes" {
   role    = aws_iam_role.workernodes.name
  }
  
+ ############################### This Policy is for EBS Add-on to Create EBS of PV K8s vloumes ##################
+ resource "aws_iam_role_policy_attachment" "AmazonEKS_EBS_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  role    = aws_iam_role.workernodes.name
+ }
+
+
  ######## These Policies are used if you're going to use ECR #######
  resource "aws_iam_role_policy_attachment" "EC2InstanceProfileForImageBuilderECRContainerBuilds" {
   policy_arn = "arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilderECRContainerBuilds"
@@ -109,9 +124,6 @@ resource "aws_iam_role" "workernodes" {
         var.private-Subnets[0],
         var.private-Subnets[1]
   ]
-  remote_access {
-    ec2_ssh_key = "ansible"
-  }
  
   instance_types = ["t3.medium"]
  

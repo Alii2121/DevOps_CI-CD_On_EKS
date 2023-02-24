@@ -1,4 +1,4 @@
-- name: Install dependencies & Packages
+- name: Configure Bastion Host And Deploy Jenkins Master
   hosts: all
   become: yes
   vars:
@@ -24,7 +24,7 @@
           - acl 
           - pip 
 
-      - name: install 
+      - name: Install kubernetes Module dependencies
         pip:
          name:
            - pyyaml
@@ -73,16 +73,21 @@
          executable: /bin/bash
     
   
-      # - name: Create namespace of jenkins 
-      #   k8s:
-      #     api_version: v1
-      #     kind: Namespace
-      #     name: jenkins
-      #     state: present
-    
-      # - name: create namespace
-      #   shell: kubectl create ns jenkins
-
+      - name: Create namespace of jenkins  
+        k8s:
+          api_version: v1
+          kind: Namespace
+          name: jenkins
+          state: present
+      
+      
+      - name: Create namespace of app
+        k8s:
+          api_version: v1
+          kind: Namespace
+          name: app
+          state: present
+     
 
       - name: Create K8S dir 
         file:
@@ -96,8 +101,8 @@
         with_items: "{{ yaml_files }}"
         
 
-      # - name: Apply YAML files using kubectl
-      #   shell: kubectl apply -f ./K8S/{{ item }} -n jenkins
-      #   with_items: "{{ yaml_files }}"
+      - name: Apply YAML files using kubectl
+        shell: kubectl apply -f ./K8S/{{ item }} -n jenkins
+        with_items: "{{ yaml_files }}"
 
      
