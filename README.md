@@ -39,6 +39,9 @@
 - The Jenkins is run from a custom Image that has Docker CLI inside it and mounted to ***/var/run/docker.sock*** to the Daemon Running on Nodes
 - The Docker Daemon Is Installed on Nodes using k8s ***Daemonset*** 
 - The Jenkins deployment has a service account with a ***ClusterRole*** That allows the deployment to create deployments
+- The Ansible ***Playbook*** Install ***AWSCLI V2*** To be able to connect to the cluster You must have V2 
+- Ansible Installs Packages and ***Kubectl*** And pass credentials and Make the EC2 Connect to the Cluster then Deploys Jenkins and creates 2 Namespaces
+
 
 
 ---------------
@@ -53,21 +56,17 @@
 ## Installation 
 
 - Clone This Repo
-- Configure your GCP credentials 
-``` bash
-gcloud auth login
-```
-- Build The Dockerfile and push it to GCR 
-``` bash
-gcloud auth configure-docker
-docker login
-docker build . -t gcr.io/<docker-username>/py-app
-docker push gcr.io/<docker-username>/py-app 
-```
+
 - Run Terraform files
 ```bash
 terraform init
 terraform apply
+```
+- The Terraform Outputs The IP of the Bastion Host to a file called ***IPS.txt***
+- Copy The IP into The ***Ansible/Inventory.txt*** file and configure Your Keys Accordingly 
+-  Then Install Ansible Kubernetes Module 
+```bash
+ansible-galaxy collection install community.kubernetes
 ```
 
 - After Terraform Creation SSH into VM and install ***kubectl*** or any needed software like ***gcloud*** ( You can use Ansible to Automate this step )
