@@ -17,6 +17,13 @@
 
 ## Project Specifications 
 
+
+ 
+
+file:///home/alimarawan/Pictures/Screenshots/Screenshot%20from%202023-02-25%2017-26-47.png
+
+
+
 - Infrastructure as a Code with Terrafrom Contains 2 Private and 2 Public Subnets with IGW and NAT 
 - Fully Private EKS Cluster And Nodes 
 - Accessing Cluster via Bastion Host
