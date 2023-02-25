@@ -65,7 +65,7 @@
 - An autoscaling group that Scales out horizontally according to traffic
 - Tools like Amazon CloudWatch and Prometheus can be used to monitor cluster and application metrics, while tools like Elasticsearch, Fluentd, and Kibana (EFK) can be used to aggregate and analyze log data.
 - Regularly patching worker nodes to protect against security vulnerabilities.
-
+- Extra Automation by automating the infrsatructure deployemnt 
 
 ----------------------
 
