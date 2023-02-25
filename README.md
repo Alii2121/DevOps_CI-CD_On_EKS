@@ -21,7 +21,7 @@
 
  
 
-file:///home/alimarawan/Pictures/Screenshots/Screenshot%20from%202023-02-25%2017-26-47.png
+
 
 
 
