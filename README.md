@@ -83,24 +83,18 @@ kubectl logs <pod-name> -n jenkins
 ```
 - Configure Jenkins And Install Plugins Like Kubernetes and GitHub
 - Enter Your Credentials for GitHub And DockerHub in ***Manage Credentials***
-- Fork This Repo to get App <a href="https://github.com/Alii2121/Py-App-CICD" target="_blank">App</a>
+- Fork This Repo to get <a href="https://github.com/Alii2121/Py-App-CICD" target="_blank">App</a>
+- Configure Pipeline to Use Jenkinsfile from The Repo And Configure Your Credntials inside the Jenkinsfile
+- You can get the app LB from the EC2 
+```bash
+kubectl get svc -n app
+```
 
+#### :rocket: Your Infra And App Is Running Successfully !
 
+----------------------
 
-------------------------------------
+![Screenshot from 2023-02-24 23-30-11](https://user-images.githubusercontent.com/103090890/221323055-29e28e6e-c1e9-46c3-a479-5fbf00731157.png)
 
-## Bonus (Jenkins)
+# Thank You !
 
-- Included Jenkins file to automate the procces 
-
-- Configure Your Jenkins Master and install terraform plugins ( Jenkins running in a container or pod)
- 
-- Run your authentication commands inside Jenkins Container
-
-- Create a new pipeline and make it run from Jenkinsfile provided in this Repo
-
-- Note : You can add Ansible playbook to automate configuration and installation of packages and k8s deployment (out of project scope)
-
-- Add the Ansible playbook to the pipeline as a stage.
-
-- Note : This pipeline destroys the infrastructure after success of build ( for cost reasons ) to prevent this behaviour delete the ***post*** block from the Jenkinsfile
