@@ -72,7 +72,7 @@
 
 ## What Can Be Improved Upon?
 
-#### Using `GitOps` Approach would be a huge improvement:
+### Using `GitOps` Approach would be a huge improvement:
 - Create an IAM policy with the necessary permissions for ArgoCD. The policy should allow read/write access to the Kubernetes API server.
 - Create an IAM role and attach the policy to the role.
 - Update the Kubernetes ConfigMap to include the IAM role.
@@ -99,7 +99,7 @@ rm argocd-darwin-amd64
     --namespace argocd
 ```
 
-#### Deploying Promethues on EKS for Montirong:
+### Deploying Promethues on EKS for Montirong:
 
 - SSH into Bastion Host or Install via `Ansible` and expose the deployment 
 ``` bash
@@ -121,7 +121,7 @@ kubectl get svc prometheus-server-lb -n prometheus
 - To configure Prometheus to scrape metrics from your EKS cluster, you can use the Kubernetes service discovery mechanism to automatically discover and scrape metrics from all the pods running in your EKS cluster. Make sure you have `Service Discovery` Add-On on your cluster
 
 
-#### Add Security Testing Tools
+### Add Security Testing Tools
 
 - `IAST` (Interactive Application Security Testing) tools - These tools combine `SAST` and `DAST` techniques to analyze the application's source code and behavior during runtime. IAST tools can help detect and remediate security issues more accurately and efficiently. Some examples of IAST tools are `Contrast Security` and `Hdiv Security`.
 
