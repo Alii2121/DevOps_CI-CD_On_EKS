@@ -128,6 +128,7 @@ asnible-playbook -i inventory.txt playbook.yml
 
 
 - Access The Jenkins URL then SSH into the EC2 to get Jenkins Password RUN
+This step is not automated for security best practice because Jenkins has full Access on the Cluster
 ``` bash 
 kubectl get pods -n jenkins 
 kubectl logs <pod-name> -n jenkins
