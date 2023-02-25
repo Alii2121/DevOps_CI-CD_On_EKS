@@ -31,17 +31,17 @@
 
 ## Getting Started
 
-- This Project Deploys A Python Counter app using ***loadbalancer***
-- The Jenkins Master is Running as a ***Deployment*** inside EKS Cluster note that the Cluster is fully Private
-- The Cluster is Only Accessible through an EC2 Acting as ***Bastion Host*** within the same ***VPC***
-- You can use ***Cloud9 IDE*** Or AWS transit gateway to connect to the cluster 
-- The K8S ***PV*** is an EBS 
-- The Jenkins is run from a my custom Image ***dockerjenkins*** that has Docker CLI inside it and mounted to ***/var/run/docker.sock*** to the Daemon Running on Nodes
-- The Docker Daemon Is Installed on Nodes using k8s ***Daemonset*** 
+- This Project Deploys A Python Counter app using `loadbalancer`
+- The Jenkins Master is Running as a `Deployment` inside EKS Cluster note that the Cluster is fully Private
+- The Cluster is Only Accessible through an EC2 Acting as `Bastion Host` within the same ***VPC***
+- You can use `Cloud9 IDE` Or AWS transit gateway to connect to the cluster 
+- The K8S `PV` is an `EBS` 
+- The Jenkins is run from a my custom Image `dockerjenkins` that has Docker CLI inside it and mounted to ***/var/run/docker.sock*** to the Daemon Running on Nodes
+- The Docker Daemon Is Installed on Nodes using k8s `Daemonset`
 - The Jenkins deployment has a service account with a ***ClusterRole*** That allows the deployment to create deployments
-- The Ansible ***Playbook*** Install ***AWSCLI V2*** To be able to connect to the cluster You must have V2 
+- The Ansible ***Playbook*** Install `AWSCLI V2` To be able to connect to the cluster You must have V2 
 - Ansible Installs Packages and ***Kubectl*** And pass credentials and Make the EC2 Connect to the Cluster then Deploys Jenkins and creates 2 Namespaces
-- The StorageClass k8s file updates the StorageClass to ***gp2*** 
+- The StorageClass k8s file updates the StorageClass to `gp2` 
 
 
 ---------------
@@ -50,17 +50,17 @@
 
 - AWS Account or IAM user with SDK permissions 
 - Install Terrafrom & Ansible & Docker
-- Install Add-ons on the Cluster like ***kube-Proxy*** & ***EBSCSI***
+- Install Add-ons on the Cluster like `kube-Proxy` & `EBSCSI`
 ---------------------
 
 ## What a real-life Deployment Need Extra?
 
-- In my Opinion A real life deployment would need a tool like ***VAULT*** to manage secrets
+- In my Opinion A real life deployment would need a tool like `VAULT` to manage secrets
 - Larger EC2 Types depending on workloads
 - Much More restrictions on Security Groups and inbound rules
 - The Usage of CLOUD9 IDE 
 - A Monitoring agent on the EKS like Prometheus
-- Integration of pipeline with ***SLACK***
+- Integration of pipeline with `SLACK`
 - Jenkins Agent thet is used to run as a slave to run docker commands then terminiate after build for security reasons
 - An autoscaling group that Scales out horizontally according to traffic
 - Tools like Amazon CloudWatch and Prometheus can be used to monitor cluster and application metrics, while tools like Elasticsearch, Fluentd, and Kibana (EFK) can be used to aggregate and analyze log data.
@@ -71,8 +71,8 @@
 
 ## What Can Be Improved Upon?
 
-#### Using GitOps Approach would be a huge improvement:
-- Create an IAM policy with the necessary permissions for Argo CD. The policy should allow read/write access to the Kubernetes API server.
+#### Using `GitOps` Approach would be a huge improvement:
+- Create an IAM policy with the necessary permissions for ArgoCD. The policy should allow read/write access to the Kubernetes API server.
 - Create an IAM role and attach the policy to the role.
 - Update the Kubernetes ConfigMap to include the IAM role.
 - Install ArgoCD CLI on the Bastion Host 
