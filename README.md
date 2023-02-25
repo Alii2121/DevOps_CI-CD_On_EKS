@@ -42,6 +42,7 @@
 - The Ansible ***Playbook*** Install `AWSCLI V2` To be able to connect to the cluster You must have V2 
 - Ansible Installs Packages and ***Kubectl*** And pass credentials and Make the EC2 Connect to the Cluster then Deploys Jenkins and creates 2 Namespaces
 - The StorageClass k8s file updates the StorageClass to `gp2` 
+- The deployment of Redis to communicate with PythonApp with variables in a `ConfigMap`
 
 
 ---------------
@@ -82,7 +83,7 @@ curl -sSL -o argocd-darwin-amd64 https://github.com/argoproj/argo-cd/releases/do
 sudo install -m 555 argocd-darwin-amd64 /usr/local/bin/argocd
 rm argocd-darwin-amd64
 ```
-- Install ArgoCD on EKS using Helm
+- Install ArgoCD on EKS using Helm ***make sure helm is installed***
 ``` bash
  kubectl create namespace argocd
  helm repo add argo https://argoproj.github.io/argo-helm
@@ -97,6 +98,36 @@ rm argocd-darwin-amd64
     --from-literal=password=<GIT_PASSWORD> \
     --namespace argocd
 ```
+
+#### Deploying Promethues on EKS for Montirong:
+
+- SSH into Bastion Host or Install via `Ansible` and expose the deployment 
+``` bash
+kubectl create ns prometheus 
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install prometheus prometheus-community/prometheus --namespace prometheus
+```
+- Verify Prometheus is installed
+```bash
+ kubectl get pods -n prometheus
+ ```
+- Expose and access the deployment 
+``` bash
+kubectl expose deployment <prometheus-server> --type=LoadBalancer --name=prometheus-server-lb --n prometheus
+kubectl get svc prometheus-server-lb -n prometheus
+```
+- Access the Prometheus server web UI by visiting `http://<external-ip>:9090`
+- To configure Prometheus to scrape metrics from your EKS cluster, you can use the Kubernetes service discovery mechanism to automatically discover and scrape metrics from all the pods running in your EKS cluster. Make sure you have `Service Discovery` Add-On on your cluster
+
+
+#### Add Security Testing Tools
+
+- `IAST` (Interactive Application Security Testing) tools - These tools combine `SAST` and `DAST` techniques to analyze the application's source code and behavior during runtime. IAST tools can help detect and remediate security issues more accurately and efficiently. Some examples of IAST tools are `Contrast Security` and `Hdiv Security`.
+
+
+
+
 
 -------------------
 
