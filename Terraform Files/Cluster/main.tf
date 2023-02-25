@@ -28,7 +28,7 @@ EOF
 
 
  ############################### This Policy is for EBS Add-on to Create EBS of PV K8s vloumes ##################
- resource "aws_iam_role_policy_attachment" "AmazonEKS_EBS_Policy" {
+ resource "aws_iam_role_policy_attachment" "AmazonEKS_EBSCSI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
   role    = aws_iam_role.workernodes.name
  }
