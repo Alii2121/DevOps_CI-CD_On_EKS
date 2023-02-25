@@ -17,6 +17,8 @@
 
 ## Project Specifications 
 
+
+- All of components running privately 
 ![Screenshot from 2023-02-25 17-26-47](https://user-images.githubusercontent.com/103090890/221380248-7da699ae-5ffd-4fc5-98dd-00e067781cde.png)
 
  
