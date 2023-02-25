@@ -53,6 +53,57 @@
 - Install Add-ons on the Cluster like ***kube-Proxy*** & ***EBSCSI***
 ---------------------
 
+## What a real-life Deployment Need Extra?
+
+- In my Opinion A real life deployment would need a tool like ***VAULT*** to manage secrets
+- Larger EC2 Types depending on workloads
+- Much More restrictions on Security Groups and inbound rules
+- The Usage of CLOUD9 IDE 
+- A Monitoring agent on the EKS like Prometheus
+- Integration of pipeline with ***SLACK***
+- Jenkins Agent thet is used to run as a slave to run docker commands then terminiate after build for security reasons
+- An autoscaling group that Scales out horizontally according to traffic
+- Tools like Amazon CloudWatch and Prometheus can be used to monitor cluster and application metrics, while tools like Elasticsearch, Fluentd, and Kibana (EFK) can be used to aggregate and analyze log data.
+- Regularly patching worker nodes to protect against security vulnerabilities.
+
+
+----------------------
+
+## What Can Be Improved Upon?
+
+#### Using GitOps Approach would be a huge improvement:
+- Create an IAM policy with the necessary permissions for Argo CD. The policy should allow read/write access to the Kubernetes API server.
+- Create an IAM role and attach the policy to the role.
+- Update the Kubernetes ConfigMap to include the IAM role.
+- Install ArgoCD CLI on the Baston Host 
+``` bash
+VERSION=$(curl --silent "https://api.github.com/repos/argoproj/argo-cd/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+curl -sSL -o argocd-darwin-amd64 https://github.com/argoproj/argo-cd/releases/download/$VERSION/argocd-darwin-amd64
+sudo install -m 555 argocd-darwin-amd64 /usr/local/bin/argocd
+rm argocd-darwin-amd64
+```
+- Install ArgoCD on EKS using Helm
+``` bash
+ kubectl create namespace argocd
+ helm repo add argo https://argoproj.github.io/argo-helm
+ helm install argocd argo/argo-cd --namespace argocd
+```
+- Create a new application manifest in your source control repository that describes the desired state of your application. The manifest should be in YAML format and include information such as the application name, source repository, target namespace, and deployment strategy.
+
+- Connect the Argo CD server to your Git repository
+ ``` bash
+ kubectl create secret generic argocd-git-creds \
+    --from-literal=username=<GIT_USERNAME> \
+    --from-literal=password=<GIT_PASSWORD> \
+    --namespace argocd
+```
+
+-------------------
+
+
+
+
+
 ## Installation 
 
 - Clone This Repo
