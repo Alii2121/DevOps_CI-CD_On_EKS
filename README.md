@@ -36,7 +36,7 @@
 - The Cluster is Only Accessible through an EC2 Acting as ***Bastion Host*** within the same ***VPC***
 - You can use ***Cloud9 IDE*** Or AWS transit gateway to connect to the cluster 
 - The K8S ***PV*** is an EBS 
-- The Jenkins is run from a custom Image that has Docker CLI inside it and mounted to ***/var/run/docker.sock*** to the Daemon Running on Nodes
+- The Jenkins is run from a my custom Image ***dockerjenkins*** that has Docker CLI inside it and mounted to ***/var/run/docker.sock*** to the Daemon Running on Nodes
 - The Docker Daemon Is Installed on Nodes using k8s ***Daemonset*** 
 - The Jenkins deployment has a service account with a ***ClusterRole*** That allows the deployment to create deployments
 - The Ansible ***Playbook*** Install ***AWSCLI V2*** To be able to connect to the cluster You must have V2 
