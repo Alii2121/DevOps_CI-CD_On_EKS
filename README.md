@@ -75,7 +75,7 @@
 - Create an IAM policy with the necessary permissions for Argo CD. The policy should allow read/write access to the Kubernetes API server.
 - Create an IAM role and attach the policy to the role.
 - Update the Kubernetes ConfigMap to include the IAM role.
-- Install ArgoCD CLI on the Baston Host 
+- Install ArgoCD CLI on the Bastion Host 
 ``` bash
 VERSION=$(curl --silent "https://api.github.com/repos/argoproj/argo-cd/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
 curl -sSL -o argocd-darwin-amd64 https://github.com/argoproj/argo-cd/releases/download/$VERSION/argocd-darwin-amd64
