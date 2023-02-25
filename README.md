@@ -1,5 +1,5 @@
-# DevOps_CI-CD_On_EKS
-## ITI_FINAL_PROJECT
+# DevOps_CI/CD_On_EKS
+## ITI FINAL PROJECT
 
 
 ![actor](https://user-images.githubusercontent.com/103090890/221306973-a5616cf8-4b58-4934-a5d0-7b58322589b9.png)
